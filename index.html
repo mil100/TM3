@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma de Estructuras Liberadoras</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .section {
+            display: none;
+        }
+        .section.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .ls-card {
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .ls-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .timer-circle {
+            stroke-dasharray: 283;
+            stroke-dashoffset: 0;
+            transition: stroke-dashoffset 1s linear;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Header y Navegación -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-teal-600" onclick="showSection('home')">Estructuras Liberadoras</a>
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="#" class="text-gray-600 hover:text-teal-600" onclick="showSection('home')">Inicio</a>
+                <a href="#" class="text-gray-600 hover:text-teal-600" onclick="showSection('menu')">Menú LS</a>
+                <a href="#" class="text-gray-600 hover:text-teal-600" onclick="showSection('interactive-tool-intro')">1-2-4-All Online</a>
+                <a href="#" class="text-gray-600 hover:text-teal-600" onclick="showSection('resources')">Recursos</a>
+                <a href="#" class="text-gray-600 hover:text-teal-600" onclick="showSection('about')">Acerca de</a>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
+            <a href="#" class="block py-2 text-gray-600 hover:text-teal-600" onclick="showSection('home')">Inicio</a>
+            <a href="#" class="block py-2 text-gray-600 hover:text-teal-600" onclick="showSection('menu')">Menú LS</a>
+            <a href="#" class="block py-2 text-gray-600 hover:text-teal-600" onclick="showSection('interactive-tool-intro')">1-2-4-All Online</a>
+            <a href="#" class="block py-2 text-gray-600 hover:text-teal-600" onclick="showSection('resources')">Recursos</a>
+            <a href="#" class="block py-2 text-gray-600 hover:text-teal-600" onclick="showSection('about')">Acerca de</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8">
+
+        <!-- SECCIÓN 1: INICIO (HOMEPAGE) -->
+        <section id="home" class="section active">
+            <div class="text-center py-12">
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-900">Construyendo la organización a la que <span class="text-teal-600">todos</span> quieren pertenecer.</h1>
+                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">Pequeños cambios en la forma de reunirse, planificar y decidir con un elevado impacto en el rendimiento y la confianza.</p>
+            </div>
+            <div class="bg-white p-8 rounded-xl shadow-lg my-8">
+                <h2 class="text-2xl font-bold text-center mb-4">¿Qué son las Estructuras Liberadoras?</h2>
+                <p class="text-center text-gray-700">Son métodos de interacción sencillos de aprender que mejoran radicalmente la forma en que nos relacionamos y trabajamos juntos. Liberan el potencial de todos, fomentando la participación activa, la co-creación y la confianza en grupos de cualquier tamaño.</p>
+                <div class="text-center mt-8">
+                    <button onclick="showSection('menu')" class="bg-teal-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-teal-700 transition-colors">
+                        Explora el Menú de Estructuras
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 2: MENÚ COMPLETO DE ESTRUCTURAS LIBERADORAS -->
+        <section id="menu" class="section">
+            <h2 class="text-3xl font-bold text-center mb-8">Menú Completo de Estructuras Liberadoras</h2>
+            <div class="bg-white p-6 rounded-xl shadow-md mb-8 sticky top-20 z-40">
+                <div class="grid md:grid-cols-3 gap-4">
+                    <input type="text" id="ls-search" placeholder="Buscar por nombre..." class="col-span-3 md:col-span-1 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:outline-none">
+                    <div class="col-span-3 md:col-span-2 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2" id="ls-filters">
+                         <button data-filter="all" class="filter-btn bg-teal-600 text-white p-2 rounded-lg">Todos</button>
+                         <button data-filter="Analizar" class="filter-btn bg-gray-200 p-2 rounded-lg">Analizar</button>
+                         <button data-filter="Ayudar" class="filter-btn bg-gray-200 p-2 rounded-lg">Ayudar</button>
+                         <button data-filter="Estrategizar" class="filter-btn bg-gray-200 p-2 rounded-lg">Estrategizar</button>
+                         <button data-filter="Planificar" class="filter-btn bg-gray-200 p-2 rounded-lg">Planificar</button>
+                         <button data-filter="Revelar" class="filter-btn bg-gray-200 p-2 rounded-lg">Revelar</button>
+                    </div>
+                </div>
+            </div>
+            <div id="ls-list" class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- Las tarjetas de LS se insertarán aquí con JS -->
+            </div>
+        </section>
+
+        <!-- SECCIÓN 3: PÁGINA DETALLADA (CONTENIDO DINÁMICO) -->
+        <section id="ls-detail" class="section">
+             <div class="bg-white p-8 rounded-xl shadow-lg">
+                <button onclick="showSection('menu')" class="mb-6 text-teal-600 hover:underline">&larr; Volver al Menú</button>
+                <div id="ls-detail-content">
+                    <!-- El contenido detallado de la LS se insertará aquí -->
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 4: HERRAMIENTA INTERACTIVA "1-2-4-ALL ONLINE" -->
+        <section id="interactive-tool-intro" class="section">
+            <div class="text-center max-w-3xl mx-auto">
+                <h2 class="text-3xl font-bold mb-4">Herramienta Interactiva: 1-2-4-All Online</h2>
+                <p class="text-gray-600 mb-6">Esta herramienta te guiará paso a paso a través de la dinámica 1-2-4-All. Simula el proceso para que puedas practicarlo o incluso usarlo para facilitar una sesión remota.</p>
+                <div class="bg-white p-8 rounded-xl shadow-lg text-left">
+                    <div class="mb-6">
+                        <label for="trigger-question" class="block text-lg font-medium text-gray-700 mb-2">Introduce la pregunta disparadora:</label>
+                        <input type="text" id="trigger-question" class="w-full p-3 border border-gray-300 rounded-lg" placeholder="Ej: ¿Qué ideas o acciones sugieres para nuestro próximo proyecto?">
+                    </div>
+                    <div class="text-center">
+                        <button onclick="start124All()" class="bg-teal-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-teal-700 transition-colors">
+                            Iniciar 1-2-4-All
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="interactive-tool-dynamic" class="section">
+            <div class="max-w-4xl mx-auto">
+                <h2 id="phase-title" class="text-3xl font-bold text-center mb-2"></h2>
+                <p id="phase-instruction" class="text-gray-600 text-center mb-6"></p>
+                <div class="relative w-32 h-32 mx-auto mb-6">
+                    <svg class="absolute top-0 left-0 w-full h-full" viewBox="0 0 100 100">
+                        <circle class="text-gray-200" stroke-width="10" stroke="currentColor" fill="transparent" r="45" cx="50" cy="50" />
+                        <circle id="timer-progress" class="text-teal-500 timer-circle" stroke-width="10" stroke-linecap="round" stroke="currentColor" fill="transparent" r="45" cx="50" cy="50" transform="rotate(-90 50 50)" />
+                    </svg>
+                    <span id="timer-display" class="absolute inset-0 flex items-center justify-center text-3xl font-bold"></span>
+                </div>
+                <div id="ideas-container" class="space-y-6"></div>
+                <div class="text-center mt-8">
+                    <button id="next-phase-btn" onclick="nextPhase()" class="bg-teal-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-teal-700 transition-colors disabled:bg-gray-400" disabled>
+                        Siguiente Fase
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section id="interactive-tool-results" class="section">
+            <div class="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-lg">
+                <h2 class="text-3xl font-bold text-center mb-6">Resultados de la Sesión 1-2-4-All</h2>
+                <div id="results-summary" class="space-y-6"></div>
+                <div class="mt-8 text-center space-x-4">
+                    <button onclick="exportResults('txt')" class="bg-gray-700 text-white font-bold py-2 px-6 rounded-lg hover:bg-gray-800">Exportar a TXT</button>
+                    <button onclick="showSection('interactive-tool-intro')" class="bg-teal-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-teal-700">Iniciar Nueva Sesión</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 5: RECURSOS ADICIONALES -->
+        <section id="resources" class="section">
+            <h2 class="text-3xl font-bold text-center mb-8">Recursos Adicionales</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="ls-card bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-bold text-xl mb-2">Material Descargable</h3>
+                    <p class="text-gray-600 mb-4">Accede a guías, plantillas y dossieres para facilitar tus sesiones.</p>
+                    <a href="#" class="text-teal-600 font-semibold hover:underline">Descargar ahora &rarr;</a>
+                </div>
+                <div class="ls-card bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-bold text-xl mb-2">App Oficial (LiSA)</h3>
+                    <p class="text-gray-600 mb-4">Lleva las 33 estructuras en tu bolsillo con la aplicación móvil.</p>
+                    <a href="#" class="text-teal-600 font-semibold hover:underline">Ir a la App Store &rarr;</a>
+                </div>
+                <div class="ls-card bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-bold text-xl mb-2">Cartas de Diseño LS</h3>
+                    <p class="text-gray-600 mb-4">Un recurso físico para diseñar "cadenas" de estructuras de forma visual y colaborativa.</p>
+                    <a href="#" class="text-teal-600 font-semibold hover:underline">Comprar cartas &rarr;</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 7: ACERCA DE / CONTACTO -->
+        <section id="about" class="section">
+            <div class="max-w-3xl mx-auto bg-white p-8 rounded-xl shadow-lg">
+                <h2 class="text-3xl font-bold text-center mb-6">Acerca de Este Proyecto</h2>
+                <p class="text-gray-700 mb-4">Esta plataforma nace con el propósito de "ampliar nuestro abecedario" de interacciones. Queremos facilitar que individuos y grupos construyan el tipo de organización a la que todos quieren pertenecer, liberando el potencial colectivo.</p>
+                <h3 class="font-bold text-xl text-center mb-4">Contacto</h3>
+                <form class="space-y-4">
+                    <input type="text" placeholder="Tu Nombre" class="w-full p-3 border border-gray-300 rounded-lg">
+                    <input type="email" placeholder="Tu Email" class="w-full p-3 border border-gray-300 rounded-lg">
+                    <textarea placeholder="Tu Mensaje" rows="4" class="w-full p-3 border border-gray-300 rounded-lg"></textarea>
+                    <div class="text-center">
+                        <button type="submit" class="bg-teal-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-teal-700">Enviar Mensaje</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // --- DATA ---
+        const liberatingStructures = [
+            { name: "1-2-4-All", category: "Analizar", time: 12, tagline: "Involucra a todos simultáneamente para generar ideas." },
+            { name: "15% Solutions", category: "Planificar", time: 20, tagline: "Descubre y enfócate en lo que cada persona tiene la libertad y recursos para hacer ahora." },
+            { name: "25/10 Crowd Sourcing", category: "Analizar", time: 30, tagline: "Obtén rápidamente las ideas más audaces de un grupo grande y priorízalas." },
+            { name: "Appreciative Interviews", category: "Revelar", time: 60, tagline: "Descubre y construye sobre las raíces del éxito." },
+            { name: "Celebrity Interview", category: "Ayudar", time: 30, tagline: "Extrae lecciones clave de la experiencia de alguien de una manera entretenida." },
+            { name: "Conversation Café", category: "Revelar", time: 60, tagline: "Involucra a todos en dar sentido a un desafío profundo." },
+            { name: "Critical Uncertainties", category: "Estrategizar", time: 60, tagline: "Desarrolla estrategias para operar en un rango de futuros plausibles." },
+            { name: "Design StoryBoards", category: "Planificar", time: 90, tagline: "Visualiza un proceso o idea para obtener feedback y refinarlo." },
+            { name: "Discovery & Action Dialogue", category: "Analizar", time: 60, tagline: "Descubre, genera y comprométete con soluciones para problemas complejos." },
+            { name: "Drawing Together", category: "Revelar", time: 45, tagline: "Revela visiones y caminos a través del dibujo no verbal." },
+            { name: "Ecocycle Planning", category: "Estrategizar", time: 75, tagline: "Analiza el portafolio de actividades para identificar trampas y oportunidades de crecimiento." },
+            { name: "Generative Relationships STAR", category: "Revelar", time: 20, tagline: "Evalúa y mejora la calidad de las relaciones clave en un equipo." },
+            { name: "Helping Heuristics", category: "Ayudar", time: 15, tagline: "Establece reglas simples para que la ayuda sea más efectiva y menos invasiva." },
+            { name: "Impromptu Networking", category: "Analizar", time: 20, tagline: "Conecta rápidamente a las personas y comparte desafíos y expectativas." },
+            { name: "Integrated-Autonomy", category: "Estrategizar", time: 60, tagline: "Equilibra la necesidad de autonomía individual con la integración en un todo coherente." },
+            { name: "Min Specs", category: "Planificar", time: 45, tagline: "Define las reglas mínimas indispensables para lograr un objetivo, maximizando la libertad." },
+            { name: "Nine Whys", category: "Revelar", time: 20, tagline: "Conecta las acciones y proyectos con un propósito más profundo y compartido." },
+            { name: "Open Space Technology", category: "Planificar", time: 120, tagline: "Libera el liderazgo inherente y la autoorganización para crear la agenda perfecta." },
+            { name: "Panarchy", category: "Estrategizar", time: 90, tagline: "Analiza cómo los diferentes niveles de un sistema interactúan y cambian con el tiempo." },
+            { name: "Purpose-To-Practice (P2P)", category: "Planificar", time: 120, tagline: "Diseña iniciativas coherentes desde el propósito hasta la práctica diaria." },
+            { name: "Shift & Share", category: "Revelar", time: 30, tagline: "Comparte y difunde innovaciones y buenas prácticas de manera rápida y efectiva." },
+            { name: "Simple Ethnography", category: "Analizar", time: 90, tagline: "Observa comportamientos reales para descubrir necesidades y oportunidades no articuladas." },
+            { name: "Social Network Webbing", category: "Analizar", time: 45, tagline: "Visualiza la red de relaciones para identificar conexiones clave y brechas." },
+            { name: "Spiral Journal", category: "Revelar", time: 15, tagline: "Facilita la reflexión individual estructurada antes de una conversación grupal." },
+            { name: "TRIZ", category: "Estrategizar", time: 40, tagline: "Deja de hacer lo que es contraproducente para abrir espacio a la innovación." },
+            { name: "Troika Consulting", category: "Ayudar", time: 30, tagline: "Obtén ayuda práctica e imaginativa de colegas de forma rápida." },
+            { name: "User Experience Fishbowl", category: "Analizar", time: 45, tagline: "Observa una experiencia de usuario en vivo para generar empatía y obtener insights." },
+            { name: "What, So What, Now What? (W3)", category: "Analizar", time: 30, tagline: "Estructura la reflexión después de una experiencia para extraer lecciones y planificar acciones." },
+            { name: "Wicked Questions", category: "Estrategizar", time: 25, tagline: "Articula tensiones paradójicas para catalizar la creatividad y la estrategia." },
+            { name: "Wise Crowds", category: "Ayudar", time: 25, tagline: "Aprovecha la sabiduría del grupo para ayudar a una persona a resolver un desafío." }
+        ];
+
+    const lsDetails = {
+					  "1-2-4-All":{
+						name: "1-2-4-All",
+						category: "Analizar",
+						time: 12,
+						tagline: "Involucra a todos simultáneamente para generar ideas.",
+						purpose: [
+						  "Generar más y mejores ideas de forma rápida.",
+						  "Fomentar la creatividad de todo el grupo.",
+						  "Llegar a un entendimiento compartido de forma natural."
+						],
+						steps: [
+						  "<b>Individual (1 min):</b> Reflexión silenciosa sobre la pregunta disparadora.",
+						  "<b>Parejas (2 min):</b> Compartir ideas en dúos.",
+						  "<b>Cuartetos (4 min):</b> Dos parejas se unen y profundizan.",
+						  "<b>Plenaria (8 min):</b> Puesta en común y priorización."
+						],
+						tips: "<strong>Hacer:</strong> Ser estricto con los timeboxes y usar preguntas claras.<br><strong>No hacer:</strong> Permitir desvíos prolongados o discusiones sin tiempo.",
+						remote: "Funciona en Zoom/Teams usando salas de subgrupo (breakout rooms).",
+						invitation: "¿Qué oportunidades ves para mejorar [tema]?",
+						space: "Mesas o sillas que permitan agrupar a 2 y 4 personas.",
+						participation: "Todos participan activamente en cada fase.",
+						complementarity: "Úsalo antes de <strong>15% Solutions</strong> o <strong>Troika Consulting</strong> para priorizar ideas."
+					  },
+					  "15% Solutions":{
+						name: "15% Solutions",
+						category: "Planificar",
+						time: 20,
+						tagline: "Descubre y enfócate en lo que cada persona tiene la libertad y recursos para hacer ahora.",
+						purpose: [
+						  "Empoderar con acciones pequeñas y realizables.",
+						  "Generar impulso y responsabilidad individual.",
+						  "Desbloquear parálisis ante la inacción."
+						],
+						steps: [
+						  "<b>Individual (5 min):</b> Listar tu 15% de soluciones.",
+						  "<b>Parejas/grupos (10 min):</b> Compartir y afinar tus acciones.",
+						  "<b>Plenaria (5 min):</b> Comprometerse públicamente con las soluciones."
+						],
+						tips: "<strong>Hacer:</strong> Enfocar en realismo y factibilidad.<br><strong>No hacer:</strong> Proponer acciones que dependan demasiado de otros.",
+						remote: "Se adapta bien a formularios online o pizarras colaborativas.",
+						invitation: "¿Cuál es tu solución del 15% para [desafío]?",
+						space: "Pizarra o post-its para listar soluciones.",
+						participation: "Todos identifican y comparten su 15%.",
+						complementarity: "Úsalo tras <strong>1-2-4-All</strong> para pasar a la acción."
+					  },
+					  "25/10 Crowd Sourcing":{
+						name: "25/10 Crowd Sourcing",
+						category: "Analizar",
+						time: 30,
+						tagline: "Obtén rápidamente las ideas más audaces de un grupo grande y priorízalas.",
+						purpose: [
+						  "Generar rápidamente un gran número de ideas.",
+						  "Identificar las ideas más populares de forma democrática.",
+						  "Asegurar que las mejores ideas emerjan de la 'sabiduría del grupo'."
+						],
+						steps: [
+						  "<b>Generar idea (5 min):</b> Cada persona escribe una idea en una tarjeta.",
+						  "<b>Rondas de mezcla y puntuación (5 rondas de 2–3 min):</b> Caminar, intercambiar tarjetas, leer y puntuar de 1 a 5.",
+						  "<b>Recuento (5 min):</b> Sumar puntuaciones; las tarjetas con 25+ puntos son ganadoras."
+						],
+						tips: "<strong>Hacer:</strong> Mantener un ritmo dinámico y motivar movimiento.<br><strong>No hacer:</strong> Permitir que los participantes retengan tarjetas sin intercambiar.",
+						remote: "Se puede adaptar con Mentimeter o pizarras virtuales para votaciones anónimas.",
+						invitation: "¿Cuál es tu idea más audaz para [nuestro desafío]?",
+						space: "Espacio amplio para que la gente camine y mezcle tarjetas.",
+						participation: "Todos generan una idea y participan en la puntuación.",
+						complementarity: "Úsalo después de <strong>1-2-4-All</strong> y antes de <strong>15% Solutions</strong>."
+					  },
+					  "Appreciative Interviews":{
+						name: "Appreciative Interviews",
+						category: "Revelar",
+						time: 60,
+						tagline: "Descubre y construye sobre las raíces del éxito.",
+						purpose: [
+						  "Explorar experiencias positivas y fortalezas.",
+						  "Generar energía y optimismo colectivo.",
+						  "Crear una base sólida para el cambio futuro."
+						],
+						steps: [
+						  "<b>Parejas (5 min):</b> Uno entrevista al otro sobre un éxito.",
+						  "<b>Cambio de roles (5 min):</b> Invertir entrevistador/entrevistado.",
+						  "<b>Plenaria (10 min):</b> Compartir insights clave."
+						],
+						tips: "<strong>Hacer:</strong> Enfocar en detalles emocionales.<br><strong>No hacer:</strong> Centrarse en problemas o errores.",
+						remote: "Funciona en breakout rooms con un pad colaborativo para notas.",
+						invitation: "Cuéntame un momento en que tu equipo superó expectativas; ¿qué lo hizo posible?",
+						space: "Entorno tranquilo y privado para entrevistas.",
+						participation: "Todos son entrevistadores y entrevistados.",
+						complementarity: "Úsalo antes de <strong>Conversation Café</strong> para enmarcar lo positivo."
+					  },
+					  "Celebrity Interview":{
+						name: "Celebrity Interview",
+						category: "Ayudar",
+						time: 30,
+						tagline: "Extrae lecciones clave de la experiencia de alguien de manera entretenida.",
+						purpose: [
+						  "Capturar conocimiento experto de forma lúdica.",
+						  "Explorar roles y perspectivas externas.",
+						  "Fomentar empatía y visión estratégica."
+						],
+						steps: [
+						  "<b>Parejas (5 min):</b> Uno asume el rol de experto ('celebrity').",
+						  "<b>Entrevista (5 min):</b> El otro hace preguntas y toma notas.",
+						  "<b>Cambio de roles (5 min):</b> Invertir papeles.",
+						  "<b>Plenaria (10 min):</b> Compartir aprendizajes."
+						],
+						tips: "<strong>Hacer:</strong> Escoger personajes relevantes.<br><strong>No hacer:</strong> Convertirlo en análisis técnico en lugar de relato.",
+						remote: "Cámaras activas + pizarra virtual para apuntes.",
+						invitation: "¿Qué le preguntarías a [experto imaginario] sobre este desafío?",
+						space: "Material para anotaciones y zona tranquila.",
+						participation: "Todos entrevistan y son entrevistados.",
+						complementarity: "Combina bien con <strong>Appreciative Interviews</strong>."
+					  },
+					  "Conversation Café":{
+						name: "Conversation Café",
+						category: "Revelar",
+						time: 60,
+						tagline: "Involucra a todos en dar sentido a un desafío profundo.",
+						purpose: [
+						  "Fomentar la reflexión colectiva.",
+						  "Construir confianza mediante la escucha activa.",
+						  "Explorar temas complejos de forma distribuida."
+						],
+						steps: [
+						  "<b>Grupos de 4 (7 min):</b> Discusión de la pregunta central.",
+						  "<b>Rotación (7 min):</b> Tres miembros cambian de grupo.",
+						  "<b>Repetir (7 min):</b> Nueva discusión en grupos mixtos.",
+						  "<b>Puesta en común (10 min):</b> Síntesis de temas surgidos."
+						],
+						tips: "<strong>Hacer:</strong> Formular preguntas profundas y mantener ritmo.<br><strong>No hacer:</strong> Permitir desviarse sin control.",
+						remote: "Salas breakout con cronómetro compartido.",
+						invitation: "¿Qué significado tiene para ti [tema]?",
+						space: "Mesas redondas o círculos de sillas para 4 personas.",
+						participation: "Todos participan en cada ronda de discusión.",
+						complementarity: "Úsalo tras <strong>1-2-4-All</strong> para mayor profundidad."
+					  },
+					  "Critical Uncertainties":{
+						name: "Critical Uncertainties",
+						category: "Estrategizar",
+						time: 60,
+						tagline: "Desarrolla estrategias para operar en un rango de futuros plausibles.",
+						purpose: [
+						  "Identificar variables clave e inciertas.",
+						  "Construir escenarios futuros contrastantes.",
+						  "Planificar estrategias de respuesta."
+						],
+						steps: [
+						  "<b>Listar incertidumbres (10 min):</b> Brainstorm.",
+						  "<b>Clasificar (10 min):</b> Impacto vs incertidumbre.",
+						  "<b>Escenarios (10 min):</b> Crear 4 escenarios combinando extremos.",
+						  "<b>Estrategias (10 min):</b> Diseñar planes para cada escenario."
+						],
+						tips: "<strong>Hacer:</strong> Incluir perspectivas diversas.<br><strong>No hacer:</strong> Descartar escenarios sin discutirlos.",
+						remote: "Canvas online con matriz editable.",
+						invitation: "¿Qué variable temes más respecto a [proyecto]?",
+						space: "Tablero con cuadrícula 2×2 grande.",
+						participation: "Todos proponen y validan incertidumbres.",
+						complementarity: "Úsalo tras <strong>Panarchy</strong> o <strong>Ecocycle Planning</strong>."
+					  },
+					  "Design StoryBoards":{
+						name: "Design StoryBoards",
+						category: "Planificar",
+						time: 90,
+						tagline: "Visualiza un proceso o idea para obtener feedback y refinarlo.",
+						purpose: [
+						  "Visualizar procesos o ideas a través de guiones gráficos.",
+						  "Detectar huecos y mejorar la experiencia.",
+						  "Alinear al equipo en una visión compartida."
+						],
+						steps: [
+						  "<b>Individual (5 min):</b> Bocetar escenas clave.",
+						  "<b>Parejas (5 min):</b> Integrar y refinar bocetos.",
+						  "<b>Grupo (10 min):</b> Unir en un storyboard único.",
+						  "<b>Plenaria (10 min):</b> Presentar y recoger feedback."
+						],
+						tips: "<strong>Hacer:</strong> Usar elementos visuales simples.<br><strong>No hacer:</strong> Sobrecargar de texto.",
+						remote: "Miro o Jamboard con marcos predefinidos.",
+						invitation: "¿Cómo representarías paso a paso [proceso/servicio]?",
+						space: "Papel, rotuladores y espacio para post-its.",
+						participation: "Todos dibujan y explican su parte.",
+						complementarity: "Úsalo tras <strong>Storyboarding</strong> o <strong>Customer Journey Map</strong>."
+					  },
+					  "Discovery & Action Dialogue":{
+						name: "Discovery & Action Dialogue",
+						category: "Analizar",
+						time: 60,
+						tagline: "Descubre, genera y comprométete con soluciones para problemas complejos.",
+						purpose: [
+						  "Investigar problemas con profundidad personal.",
+						  "Recoger acciones factibles y concretas.",
+						  "Fomentar el compromiso y la experimentación rápida."
+						],
+						steps: [
+						  "<b>Presentación (5 min):</b> En trío, uno expone su dilema.",
+						  "<b>Descubrimiento (10 min):</b> Dos hacen preguntas exploratorias.",
+						  "<b>Diálogo de acción (10 min):</b> Discutir posibles acciones y compromisos.",
+						  "<b>Plenaria (10 min):</b> Compartir lecciones y planes de acción."
+						],
+						tips: "<strong>Hacer:</strong> Enfocar en preguntas abiertas y escucha activa.<br><strong>No hacer:</strong> Proponer soluciones sin exploración previa.",
+						remote: "Se adapta a breakout rooms y pizarra colaborativa.",
+						invitation: "¿Cuál es el desafío que deseas explorar hoy?",
+						space: "Mesas para grupos de 3 y espacio para anotar.",
+						participation: "Todos rotan roles de presentador, explorador y registrador.",
+						complementarity: "Úsalo tras <strong>Troika Consulting</strong> para definir acciones inmediatas."
+					  },
+					  "Drawing Together":{
+						name: "Drawing Together",
+						category: "Revelar",
+						time: 45,
+						tagline: "Revela visiones y caminos a través del dibujo no verbal.",
+						purpose: [
+						  "Fomentar la co-creación a través del dibujo.",
+						  "Revelar ideas no verbales.",
+						  "Construir una visión compartida rápida."
+						],
+						steps: [
+						  "<b>Individual (5 min):</b> Dibujar concepto inicial.",
+						  "<b>Grupos (10 min):</b> Fusionar dibujos y acordar elementos.",
+						  "<b>Plenaria (10 min):</b> Presentar y votar versiones."
+						],
+						tips: "<strong>Hacer:</strong> Animar bocetos rápidos sin perfección.<br><strong>No hacer:</strong> Criticar habilidades artísticas.",
+						remote: "Herramientas de dibujo virtual (p.ej. Miro).",
+						invitation: "¿Cómo dibujarías [concepto]?",
+						space: "Pizarras, papel y material de dibujo.",
+						participation: "Todos dibujan y explican.",
+						complementarity: "Úsalo antes de <strong>Design StoryBoards</strong>."
+					  },
+					  "Ecocycle Planning":{
+						name: "Ecocycle Planning",
+						category: "Estrategizar",
+						time: 75,
+						tagline: "Analiza actividades para identificar trampas y oportunidades de crecimiento.",
+						purpose: [
+						  "Identificar qué iniciativas están germinando, en auge o en declive.",
+						  "Detectar bloqueos y oportunidades de reinvención.",
+						  "Planificar portafolios de proyectos de forma dinámica."
+						],
+						steps: [
+						  "<b>Mapeo (10 min):</b> Ubicar iniciativas en las cuatro zonas del ciclo.",
+						  "<b>Análisis (10 min):</b> Debatir bloqueos y transiciones.",
+						  "<b>Plan (10 min):</b> Definir acciones para renovar o retirar."
+						],
+						tips: "<strong>Hacer:</strong> Facilitar consenso sobre zonas.<br><strong>No hacer:</strong> Sobreabundar en iniciativas sin prioridad.",
+						remote: "Pizarra compartida con plantilla de ecociclo.",
+						invitation: "¿Dónde colocamos [proyecto] en este ciclo?",
+						space: "Gran mural o pizarra con notas adhesivas.",
+						participation: "Todos proponen y validan posiciones.",
+						complementarity: "Combínalo con <strong>Critical Uncertainties</strong>."
+					  },
+					  "Generative Relationships STAR":{
+						name: "Generative Relationships STAR",
+						category: "Revelar",
+						time: 20,
+						tagline: "Evalúa y mejora la calidad de las relaciones clave en un equipo.",
+						purpose: [
+						  "Mapear fuerza y dirección de relaciones.",
+						  "Detectar vínculos débiles o ausentes.",
+						  "Planificar acciones para fortalecer colaboraciones."
+						],
+						steps: [
+						  "<b>Identificar actores (5 min):</b> Listar personas/roles claves.",
+						  "<b>Evaluar (10 min):</b> Calificar con estrellas la calidad de la relación.",
+						  "<b>Análisis (10 min):</b> Debatir brechas y prioridades.",
+						  "<b>Acciones (5 min):</b> Definir pasos para mejorar conexiones."
+						],
+						tips: "<strong>Hacer:</strong> Ser honesto en las evaluaciones.<br><strong>No hacer:</strong> Excluir relaciones incómodas.",
+						remote: "Hoja de cálculo compartida con estrellas editables.",
+						invitation: "¿Cómo valoras tu relación con [actor]?",
+						space: "Matriz con actores y columna de estrellas.",
+						participation: "Todos califican y comentan.",
+						complementarity: "Combínalo con <strong>Social Network Webbing</strong>."
+					  },
+					  "Helping Heuristics":{
+						name: "Helping Heuristics",
+						category: "Ayudar",
+						time: 15,
+						tagline: "Establece reglas simples para que la ayuda sea más efectiva y menos invasiva.",
+						purpose: [
+						  "Promover el apoyo mutuo en retos concretos.",
+						  "Practicar feedback constructivo.",
+						  "Fortalecer redes de colaboración internas."
+						],
+						steps: [
+						  "<b>Parejas (5 min):</b> Uno plantea un reto y el otro escucha.",
+						  "<b>Rondas (5 min):</b> Intercambio estructurado de consejos.",
+						  "<b>Plenaria (5 min):</b> Compartir aprendizajes del proceso."
+						],
+						tips: "<strong>Hacer:</strong> Enfocar en soluciones, no en críticas.<br><strong>No hacer:</strong> Dar consejos no solicitados.",
+						remote: "Breakout rooms y chat privado para sugerencias.",
+						invitation: "¿En qué necesitas ayuda hoy?",
+						space: "Entorno tranquilo para confidencialidad.",
+						participation: "Todos alternan rol de ayudante y recept@.",
+						complementarity: "Úsalo antes de <strong>Troika Consulting</strong>."
+					  },
+					  "Impromptu Networking":{
+						name: "Impromptu Networking",
+						category: "Analizar",
+						time: 20,
+						tagline: "Conecta rápidamente a las personas y comparte desafíos y expectativas.",
+						purpose: [
+						  "Romper el hielo de forma ágil.",
+						  "Construir relaciones y compartir conocimiento.",
+						  "Maximizar la interacción en eventos."
+						],
+						steps: [
+						  "<b>Parejas (2 min):</b> Presentación rápida mutua.",
+						  "<b>Rotación (2 min):</b> Cambiar de pareja.",
+						  "Repetir varias rondas."
+						],
+						tips: "<strong>Hacer:</strong> Mantener ritmo rápido.<br><strong>No hacer:</strong> Extender cada conversación.",
+						remote: "Breakout rooms auto-rotativos de 2 participantes.",
+						invitation: "Comparte tu nombre y un reto que tengas hoy.",
+						space: "Sillas en círculo o ambiente abierto.",
+						participation: "Todos participan en cada ronda.",
+						complementarity: "Ideal al inicio de talleres antes de <strong>1-2-4-All</strong>."
+					  },
+					  "Integrated-Autonomy":{
+						name: "Integrated-Autonomy",
+						category: "Estrategizar",
+						time: 60,
+						tagline: "Equilibra la necesidad de autonomía individual con la integración en un todo coherente.",
+						purpose: [
+						  "Definir áreas de decisión compartida y personal.",
+						  "Clarificar responsabilidades.",
+						  "Fomentar confianza en la autogestión."
+						],
+						steps: [
+						  "<b>Identificar actividades (10 min):</b> Listar tareas del equipo.",
+						  "<b>Clasificar (10 min):</b> Decisión compartida vs. autónoma.",
+						  "<b>Revisar (10 min):</b> Acordar límites y excepciones."
+						],
+						tips: "<strong>Hacer:</strong> Ser claro en criterios de clasificación.<br><strong>No hacer:</strong> Dejar ambigüedades en roles.",
+						remote: "Documento colaborativo para listar y votar.",
+						invitation: "¿Qué decisiones son del equipo y cuáles son tuyas?",
+						space: "Tablero con dos columnas marcadas.",
+						participation: "Todos aportan tareas y votan.",
+						complementarity: "Combínalo con <strong>Purpose-To-Practice (P2P)</strong>."
+					  },
+					  "Min Specs":{
+						name: "Min Specs",
+						category: "Planificar",
+						time: 45,
+						tagline: "Define las reglas mínimas indispensables para lograr un objetivo, maximizando la libertad.",
+						purpose: [
+						  "Reducir burocracia y simplificar procesos.",
+						  "Establecer estándares claros y mínimos.",
+						  "Aumentar agilidad sin perder calidad."
+						],
+						steps: [
+						  "<b>Identificar prácticas (10 min):</b> Listar normas actuales.",
+						  "<b>Debatir (10 min):</b> Preguntar “¿es esencial?”.",
+						  "<b>Formalizar (10 min):</b> Acordar el conjunto mínimo."
+						],
+						tips: "<strong>Hacer:</strong> Enfocar en valor real.<br><strong>No hacer:</strong> Añadir excepciones innecesarias.",
+						remote: "Documento colaborativo en tiempo real.",
+						invitation: "¿Qué norma no podríamos eliminar?",
+						space: "Pizarra con lista editable.",
+						participation: "Todos discuten y validan.",
+						complementarity: "Úsalo antes de <strong>Structure for Clarity</strong>."
+					  },
+					  "Nine Whys":{
+						name: "Nine Whys",
+						category: "Revelar",
+						time: 20,
+						tagline: "Conecta las acciones y proyectos con un propósito más profundo y compartido.",
+						purpose: [
+						  "Profundizar en motivaciones subyacentes.",
+						  "Alinear al equipo en un 'por qué' claro.",
+						  "Revelar supuestos ocultos."
+						],
+						steps: [
+						  "<b>Pregunta inicial (5 min):</b> Definir objetivo o problema.",
+						  "<b>9× ¿Por qué? (15 min):</b> Iterar en grupos o parejas.",
+						  "<b>Síntesis (5 min):</b> Extraer propósito esencial."
+						],
+						tips: "<strong>Hacer:</strong> Mantener la curiosidad.<br><strong>No hacer:</strong> Aceptar la primera respuesta sin cuestionar.",
+						remote: "Chat colaborativo con hilos numerados.",
+						invitation: "¿Por qué es importante [objetivo]?",
+						space: "Área para anotar cada 'por qué'.",
+						participation: "Todos contribuyen a cada nivel.",
+						complementarity: "Úsalo antes de <strong>Purpose-To-Practice (P2P)</strong>."
+					  },
+					  "Open Space Technology":{
+						name: "Open Space Technology",
+						category: "Planificar",
+						time: 120,
+						tagline: "Libera el liderazgo inherente y la autoorganización para crear la agenda perfecta.",
+						purpose: [
+						  "Descubrir los temas que más importan al grupo.",
+						  "Fomentar la responsabilidad y liderazgo distribuido.",
+						  "Generar múltiples conversaciones simultáneas."
+						],
+						steps: [
+						  "<b>Apertura (10 min):</b> Explicar proceso y Ley de los Dos Pies.",
+						  "<b>Propuesta de temas (15 min):</b> Cada uno anota su tema.",
+						  "<b>Calendario (10 min):</b> Organizar sesiones en tiempos y espacios.",
+						  "<b>Sesiones (variable):</b> Autoorganización y documentación.",
+						  "<b>Cierre (30 min):</b> Compartir aprendizajes clave."
+						],
+						tips: "<strong>Hacer:</strong> Respetar la Ley de los Dos Pies.<br><strong>No hacer:</strong> Imponer temas desde la jerarquía.",
+						remote: "Tablero virtual con sesiones y enlaces a breakout rooms.",
+						invitation: "¿Qué tema quieres explorar hoy?",
+						space: "Gran sala con varias mesas o áreas temáticas.",
+						participation: "Todos pueden proponer y asistir a sesiones.",
+						complementarity: "Úsalo tras <strong>Impromptu Networking</strong>."
+					  },
+					  "Panarchy":{
+						name: "Panarchy",
+						category: "Estrategizar",
+						time: 90,
+						tagline: "Analiza cómo los diferentes niveles de un sistema interactúan y cambian con el tiempo.",
+						purpose: [
+						  "Comprender interdependencias entre subsistemas.",
+						  "Detectar palancas de cambio sistémico.",
+						  "Planificar intervenciones coordinadas."
+						],
+						steps: [
+						  "<b>Identificar niveles (10 min):</b> Definir escalas (equipo, área, empresa).",
+						  "<b>Mapeo (15 min):</b> Ubicar iniciativas en cada nivel.",
+						  "<b>Análisis (10 min):</b> Debatir conexiones y efectos.",
+						  "<b>Plan (10 min):</b> Acordar acciones coordinadas."
+						],
+						tips: "<strong>Hacer:</strong> Facilitar perspectiva sistémica.<br><strong>No hacer:</strong> Ignorar efectos colaterales.",
+						remote: "Pizarra compartida con capas de niveles.",
+						invitation: "¿Cómo impacta [iniciativa] en otros niveles?",
+						space: "Mural con secciones para cada escala.",
+						participation: "Todos proponen y validan conexiones.",
+						complementarity: "Combínalo con <strong>Ecocycle Planning</strong>."
+					  },
+					  "Purpose-To-Practice (P2P)":{
+						name: "Purpose-To-Practice (P2P)",
+						category: "Planificar",
+						time: 120,
+						tagline: "Diseña iniciativas coherentes desde el propósito hasta la práctica diaria.",
+						purpose: [
+						  "Traducir misión en estructuras y roles.",
+						  "Alinear objetivos y métodos de trabajo.",
+						  "Crear acuerdos claros de funcionamiento."
+						],
+						steps: [
+						  "<b>Propósito (10 min):</b> Definir misión y visión.",
+						  "<b>Principios (10 min):</b> Especificar valores guía.",
+						  "<b>Roles (10 min):</b> Describir responsabilidades.",
+						  "<b>Prácticas (10 min):</b> Establecer métodos y procesos."
+						],
+						tips: "<strong>Hacer:</strong> Involucrar a todos los stakeholders.<br><strong>No hacer:</strong> Saltarse ninguna fase.",
+						remote: "Canvas digital colaborativo.",
+						invitation: "¿Cuál es nuestro propósito y cómo lo llevamos a la práctica?",
+						space: "Canvas impreso o digital compartido.",
+						participation: "Todos participan en cada fase.",
+						complementarity: "Úsalo tras <strong>Nine Whys</strong>."
+					  },
+					  "Shift & Share":{
+						name: "Shift & Share",
+						category: "Revelar",
+						time: 30,
+						tagline: "Comparte y difunde innovaciones y buenas prácticas de manera rápida y efectiva.",
+						purpose: [
+						  "Difundir aprendizajes de forma rápida.",
+						  "Fomentar el intercambio de experiencias.",
+						  "Construir comunidad de práctica."
+						],
+						steps: [
+						  "<b>Preparación (5 min):</b> Cada uno prepara un tip práctico.",
+						  "<b>Mini-clases (3×5 min):</b> Tres ponentes simultáneos en estaciones.",
+						  "<b>Rotación (3 rondas):</b> Participantes rotan entre estaciones."
+						],
+						tips: "<strong>Hacer:</strong> Limitar tiempo de exposición.<br><strong>No hacer:</strong> Convertirlo en charla magistral.",
+						remote: "Canales de Zoom para cada estación.",
+						invitation: "¿Qué práctica te ha funcionado mejor en tu equipo?",
+						space: "Tres mesas o zonas diferenciadas.",
+						participation: "Todos asisten a cada estación.",
+						complementarity: "Úsalo antes de <strong>What, So What, Now What?</strong>."
+					  },
+					  "Simple Ethnography":{
+						name: "Simple Ethnography",
+						category: "Analizar",
+						time: 90,
+						tagline: "Observa comportamientos reales para descubrir necesidades y oportunidades no articuladas.",
+						purpose: [
+						  "Recoger datos reales de usuarios o procesos.",
+						  "Identificar fricciones y hábitos.",
+						  "Iluminar mejoras basadas en evidencias."
+						],
+						steps: [
+						  "<b>Observación (10 min):</b> Registrar acciones sin intervenir.",
+						  "<b>Notas (5 min):</b> Anotar patrones y excepciones.",
+						  "<b>Compartir (10 min):</b> Discusión de hallazgos.",
+						  "<b>Acciones (5 min):</b> Planificar mejoras."
+						],
+						tips: "<strong>Hacer:</strong> Ser discreto y preciso.<br><strong>No hacer:</strong> Interferir con el proceso.",
+						remote: "Grabaciones o pantallas compartidas para observación en vivo.",
+						invitation: "Observa cómo interactúan con [herramienta/proceso].",
+						space: "Zona de observación sin interrupciones.",
+						participation: "Equipos rotan roles de observador y usuario.",
+						complementarity: "Úsalo antes de <strong>Customer Journey Map</strong>."
+					  },
+					  "Social Network Webbing":{
+						name: "Social Network Webbing",
+						category: "Analizar",
+						time: 45,
+						tagline: "Visualiza la red de relaciones para identificar conexiones clave y brechas.",
+						purpose: [
+						  "Mapear redes de colaboración.",
+						  "Detectar nodos y cuellos de botella.",
+						  "Fortalecer conexiones útiles."
+						],
+						steps: [
+						  "<b>Identificar actores (5 min):</b> Listar personas/roles.",
+						  "<b>Dibujar conexiones (10 min):</b> Trazar líneas según frecuencia/valor.",
+						  "<b>Analizar (10 min):</b> Debatir fortalezas y vacíos.",
+						  "<b>Acciones (5 min):</b> Planificar mejoras de red."
+						],
+						tips: "<strong>Hacer:</strong> Ser transparente en criterios de conexión.<br><strong>No hacer:</strong> Excluir a nadie del mapa.",
+						remote: "Herramienta online para dibujar red colaborativa.",
+						invitation: "¿Con quién colaboras más en [actividad]?",
+						space: "Mural con nodos y cadenas de hilo o rotulador.",
+						participation: "Todos agregan nodos y líneas.",
+						complementarity: "Combínalo con <strong>Helping Heuristics</strong>."
+					  },
+					  "Spiral Journal":{
+						name: "Spiral Journal",
+						category: "Revelar",
+						time: 15,
+						tagline: "Facilita la reflexión individual estructurada antes de una conversación grupal.",
+						purpose: [
+						  "Profundizar aprendizajes individuales.",
+						  "Compartir insights en círculo.",
+						  "Promover el aprendizaje continuo."
+						],
+						steps: [
+						  "<b>Escritura individual (5 min):</b> Reflexión sobre pregunta disparadora.",
+						  "<b>Compartir en parejas (5 min):</b> Intercambio de reflexiones.",
+						  "<b>Círculo mayor (5 min):</b> Síntesis de aprendizajes clave."
+						],
+						tips: "<strong>Hacer:</strong> Dar espacio para silencio.<br><strong>No hacer:</strong> Interrumpir la fase de escritura.",
+						remote: "Documento compartido y salas de pareja.",
+						invitation: "¿Qué has aprendido en esta semana que quieras retener?",
+						space: "Mesas pequeñas o círculo con asiento cómodo.",
+						participation: "Todos escriben y comparten.",
+						complementarity: "Úsalo tras <strong>What, So What, Now What?</strong>."
+					  },
+					  "TRIZ":{
+						name: "TRIZ",
+						category: "Estrategizar",
+						time: 40,
+						tagline: "Deja de hacer lo que es contraproducente para abrir espacio a la innovación.",
+						purpose: [
+						  "Identificar y romper suposiciones limitantes.",
+						  "Generar ideas innovadoras a partir de lo contrario.",
+						  "Evitar soluciones previsibles."
+						],
+						steps: [
+						  "<b>Definir problema (5 min):</b> Expresar desafío actual.",
+						  "<b>Invertir supuestos (10 min):</b> ¿Qué haríamos si quisiéramos empeorar?",
+						  "<b>Generar ideas (10 min):</b> Revertir para innovar.",
+						  "<b>Seleccionar (5 min):</b> Elegir soluciones reversibles."
+						],
+						tips: "<strong>Hacer:</strong> Fomentar pensamiento libre.<br><strong>No hacer:</strong> Juzgar prematuramente las ideas disparatadas.",
+						remote: "Documento colaborativo para listar y votar.",
+						invitation: "¿Cómo harías que [problema] empeorara?",
+						space: "Pizarra con dos columnas: suposición/opuesto.",
+						participation: "Todos proponen y validan reversiones.",
+						complementarity: "Combínalo con <strong>1-2-4-All</strong> para priorizar."
+					  },
+					  "Troika Consulting":{
+						name: "Troika Consulting",
+						category: "Ayudar",
+						time: 30,
+						tagline: "Obtén ayuda práctica e imaginativa de colegas de forma rápida.",
+						purpose: [
+						  "Obtener múltiples perspectivas en minutos.",
+						  "Practicar feedback constructivo.",
+						  "Fomentar la empatía y el intercambio."
+						],
+						steps: [
+						  "<b>Trios (15 min):</b> Cada uno plantea un reto (5 min).",
+						  "<b>Consultoría (5 min):</b> Dos escuchan y aconsejan.",
+						  "<b>Rotación (5 min):</b> Intercambiar roles."
+						],
+						tips: "<strong>Hacer:</strong> Escuchar sin interrumpir.<br><strong>No hacer:</strong> Imponer soluciones propias.",
+						remote: "Breakout rooms con grupos de tres.",
+						invitation: "¿Cuál es tu reto más urgente hoy?",
+						space: "Mesas o salas pequeñas para tríos.",
+						participation: "Todos alternan rol de consultado y consultor.",
+						complementarity: "Úsalo tras <strong>15% Solutions</strong> para profundizar."
+					  },
+					  "User Experience Fishbowl":{
+						name: "User Experience Fishbowl",
+						category: "Analizar",
+						time: 45,
+						tagline: "Observa una experiencia de usuario en vivo para generar empatía y obtener insights.",
+						purpose: [
+						  "Explorar experiencias reales en vivo.",
+						  "Fomentar la escucha activa.",
+						  "Recolectar insights directos de usuarios."
+						],
+						steps: [
+						  "<b>Círculo interior (5 min):</b> Usuarios/actores clave discuten.",
+						  "<b>Observación (10 min):</b> El resto escucha sin intervenir.",
+						  "<b>Rotación (10 min):</b> Nuevos participantes entran al pez."
+						],
+						tips: "<strong>Hacer:</strong> Definir roles claros.<br><strong>No hacer:</strong> Permitir interrupciones desde la periferia.",
+						remote: "Videollamada con cámara en círculo central y escuchas en off.",
+						invitation: "Invita a un usuario real o simulador a compartir su experiencia.",
+						space: "Sillas en círculo concéntrico.",
+						participation: "Solo el círculo interior habla.",
+						complementarity: "Úsalo antes de <strong>Design StoryBoards</strong>."
+					  },
+					  "What, So What, Now What? (W3)":{
+						name: "What, So What, Now What? (W3)",
+						category: "Analizar",
+						time: 30,
+						tagline: "Estructura la reflexión después de una experiencia para extraer lecciones y planificar acciones.",
+						purpose: [
+						  "Analizar hechos ocurridos.",
+						  "Extraer aprendizajes clave.",
+						  "Definir acciones futuras claras."
+						],
+						steps: [
+						  "<b>What (5 min):</b> Describir objetivamente qué pasó.",
+						  "<b>So What (10 min):</b> Interpretar significado e implicaciones.",
+						  "<b>Now What (10 min):</b> Planificar próximos pasos."
+						],
+						tips: "<strong>Hacer:</strong> Mantener fases separadas.<br><strong>No hacer:</strong> Mezclar discusión de hechos con acciones.",
+						remote: "Documento colaborativo con secciones numeradas.",
+						invitation: "¿Qué ocurrió, qué significa y qué haremos ahora?",
+						space: "Flipchart o slide con tres columnas separadas.",
+						participation: "Todos aportan en cada fase.",
+						complementarity: "Úsalo tras <strong>Shift & Share</strong> o cualquier entrega."
+					  },
+					  "Wicked Questions":{
+						name: "Wicked Questions",
+						category: "Estrategizar",
+						time: 25,
+						tagline: "Articula tensiones paradójicas para catalizar la creatividad y la estrategia.",
+						purpose: [
+						  "Revelar dilemas sin solución única.",
+						  "Fomentar el pensamiento creativo.",
+						  "Generar conversaciones profundas."
+						],
+						steps: [
+						  "<b>Identificar pares (5 min):</b> Dos conceptos opuestos.",
+						  "<b>Formular pregunta (10 min):</b> Crear pregunta que refleje la tensión.",
+						  "<b>Debate (10 min):</b> Explorar respuestas posibles."
+						],
+						tips: "<strong>Hacer:</strong> Abrir espacio para la paradoja.<br><strong>No hacer:</strong> Forzar una sola respuesta.",
+						remote: "Documento colaborativo y sala común para debate.",
+						invitation: "¿Cómo equilibrar [concepto A] y [concepto B] en nuestro contexto?",
+						space: "Círculo de discusión o sala abierta.",
+						participation: "Todos debaten y proponen matices.",
+						complementarity: "Úsalo antes de <strong>Critical Uncertainties</strong>."
+					  },
+					  "Wise Crowds":{
+						name: "Wise Crowds",
+						category: "Ayudar",
+						time: 25,
+						tagline: "Aprovecha la sabiduría del grupo para ayudar a una persona a resolver un desafío.",
+						purpose: [
+						  "Resolver dilemas complejos.",
+						  "Aprovechar la sabiduría colectiva.",
+						  "Practicar consultoría ágil entre pares."
+						],
+						steps: [
+						  "<b>Presentación (5 min):</b> Uno expone su dilema.",
+						  "<b>Consultoría (10 min):</b> Grupos dan feedback estructurado.",
+						  "<b>Puesta en común (10 min):</b> Síntesis de consejos."
+						],
+						tips: "<strong>Hacer:</strong> Fomentar diversidad de perspectivas.<br><strong>No hacer:</strong> Dar consejos no solicitados.",
+						remote: "Breakout rooms y pizarra compartida.",
+						invitation: "¿Cuál es tu mayor dilema ahora?",
+						space: "Mesas para grupos de 4–5 personas.",
+						participation: "Todos contribuyen con preguntas y sugerencias.",
+						complementarity: "Úsalo tras <strong>Troika Consulting</strong> para más profundidad."
+					  }};
+					
+
+
+
+
+
+        // --- NAVEGACIÓN ---
+        const sections = document.querySelectorAll('.section');
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        function showSection(id) {
+            sections.forEach(section => {
+                section.classList.toggle('active', section.id === id);
+            });
+            window.scrollTo(0, 0);
+            mobileMenu.classList.add('hidden');
+        }
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // --- MENÚ LS ---
+        const lsList = document.getElementById('ls-list');
+        const searchInput = document.getElementById('ls-search');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+
+        function renderLS(filter = 'all', searchTerm = '') {
+            lsList.innerHTML = '';
+            const filtered = liberatingStructures.filter(ls => {
+                const matchesCategory = filter === 'all' || ls.category === filter;
+                const matchesSearch = ls.name.toLowerCase().includes(searchTerm.toLowerCase());
+                return matchesCategory && matchesSearch;
+            });
+
+            if (filtered.length === 0) {
+                lsList.innerHTML = `<p class="col-span-full text-center text-gray-500">No se encontraron estructuras.</p>`;
+                return;
+            }
+
+            filtered.forEach(ls => {
+                const card = document.createElement('div');
+                card.className = 'ls-card bg-white p-6 rounded-lg shadow-md cursor-pointer';
+                card.innerHTML = `
+                    <h3 class="font-bold text-xl mb-2">${ls.name}</h3>
+                    <p class="text-gray-600 text-sm mb-4 h-10">${ls.tagline}</p>
+                    <div class="flex justify-between items-center text-sm text-gray-500">
+                        <span class="bg-teal-100 text-teal-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">${ls.category}</span>
+                        <span>${ls.time} min</span>
+                    </div>
+                `;
+                card.onclick = () => showLSDetail(ls.name);
+                lsList.appendChild(card);
+            });
+        }
+        
+        // --- DETALLE DE LS (DINÁMICO) ---
+        const detailContent = document.getElementById('ls-detail-content');
+
+        function showLSDetail(name) {
+            const data = lsDetails[name] || {
+                name: name,
+                tagline: "Detalles próximamente disponibles.",
+                purpose: ["Información no cargada."],
+                steps: ["Información no cargada."],
+                tips: "Información no cargada.",
+                remote: "Información no cargada.",
+                invitation: "Información no cargada.",
+                space: "Información no cargada.",
+                participation: "Información no cargada.",
+                complementarity: "Información no cargada."
+            };
+            
+            detailContent.innerHTML = `
+                <h2 class="text-4xl font-bold mb-2">${data.name}</h2>
+                <p class="text-lg text-gray-600 mb-6">${data.tagline}</p>
+                
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="md:col-span-2 space-y-6">
+                        <div>
+                            <h3 class="font-bold text-xl mb-2">Propósitos y Beneficios</h3>
+                            <ul class="list-disc list-inside text-gray-700 space-y-1">${data.purpose.map(p => `<li>${p}</li>`).join('')}</ul>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-xl mb-2">Secuencia de Pasos y Tiempos</h3>
+                            <ol class="list-decimal list-inside text-gray-700 space-y-2">${data.steps.map(s => `<li>${s}</li>`).join('')}</ol>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-xl mb-2">Sugerencias y Trampas</h3>
+                            <p class="text-gray-700">${data.tips}</p>
+                        </div>
+                         <div>
+                            <h3 class="font-bold text-xl mb-2">Aplicación Remota</h3>
+                            <p class="text-gray-700">${data.remote}</p>
+                        </div>
+                    </div>
+                    <div class="bg-gray-100 p-6 rounded-lg space-y-4 self-start">
+                        <h4 class="font-bold text-lg">Especificaciones Mínimas</h4>
+                        <p><strong>Invitación:</strong> ${data.invitation}</p>
+                        <p><strong>Espacio:</strong> ${data.space}</p>
+                        <p><strong>Participación:</strong> ${data.participation}</p>
+                        <hr>
+                        <h4 class="font-bold text-lg">Complementariedad</h4>
+                        <p>${data.complementarity}</p>
+                    </div>
+                </div>
+            `;
+            showSection('ls-detail');
+        }
+
+
+        searchInput.addEventListener('input', (e) => {
+            const currentFilter = document.querySelector('.filter-btn.bg-teal-600').dataset.filter;
+            renderLS(currentFilter, e.target.value);
+        });
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                filterButtons.forEach(btn => {
+                    btn.classList.remove('bg-teal-600', 'text-white');
+                    btn.classList.add('bg-gray-200');
+                });
+                button.classList.add('bg-teal-600', 'text-white');
+                button.classList.remove('bg-gray-200');
+                renderLS(button.dataset.filter, searchInput.value);
+            });
+        });
+
+        // --- HERRAMIENTA 1-2-4-ALL ---
+        let currentPhase = 0;
+        let timerInterval;
+        let userIdeas = { 1: '', 2: '', 3: '', 4: '' };
+        const phases = [
+            { title: 'Fase 1: Individual', time: 60, instruction: 'Reflexiona en silencio sobre la pregunta y anota tus ideas personales.' },
+            { title: 'Fase 2: En Parejas', time: 120, instruction: 'Comparte tus ideas con un compañero. Generen nuevas ideas juntos o refinen las existentes.' },
+            { title: 'Fase 3: En Cuarteto', time: 240, instruction: 'Tu pareja se une a otra. Compartan las ideas de sus parejas y observen similitudes y diferencias.' },
+            { title: 'Fase 4: Todos (Plenaria)', time: 300, instruction: 'Tu grupo comparte una idea destacada con todos. Anota la idea más importante que surgió.' }
+        ];
+        const phaseTitle = document.getElementById('phase-title');
+        const phaseInstruction = document.getElementById('phase-instruction');
+        const timerDisplay = document.getElementById('timer-display');
+        const timerProgress = document.getElementById('timer-progress');
+        const ideasContainer = document.getElementById('ideas-container');
+        const nextPhaseBtn = document.getElementById('next-phase-btn');
+
+        function start124All() {
+            const question = document.getElementById('trigger-question').value;
+            if (!question.trim()) {
+                alert('Por favor, introduce una pregunta disparadora para comenzar.');
+                return;
+            }
+            userIdeas = { 1: '', 2: '', 3: '', 4: '', question };
+            currentPhase = 0;
+            showSection('interactive-tool-dynamic');
+            setupPhase();
+        }
+
+        function setupPhase() {
+            const phase = phases[currentPhase];
+            phaseTitle.textContent = phase.title;
+            phaseInstruction.textContent = phase.instruction;
+            nextPhaseBtn.disabled = true;
+            renderIdeaInputs();
+            startTimer(phase.time);
+        }
+        
+        function renderIdeaInputs() {
+            ideasContainer.innerHTML = '';
+            for (let i = 0; i < currentPhase; i++) {
+                const pastPhase = phases[i];
+                const ideaDiv = document.createElement('div');
+                ideaDiv.innerHTML = `<label class="block text-sm font-medium text-gray-500 mb-1">Ideas de la ${pastPhase.title}</label><div class="w-full p-3 bg-gray-100 border border-gray-200 rounded-lg whitespace-pre-wrap">${userIdeas[i + 1] || 'Sin ideas guardadas.'}</div>`;
+                ideasContainer.appendChild(ideaDiv);
+            }
+            const currentPhaseDiv = document.createElement('div');
+            currentPhaseDiv.innerHTML = `<label for="idea-input-${currentPhase + 1}" class="block text-lg font-medium text-gray-700 mb-2">Tus ideas para esta fase:</label><textarea id="idea-input-${currentPhase + 1}" class="w-full p-3 border border-gray-300 rounded-lg" rows="5"></textarea>`;
+            ideasContainer.appendChild(currentPhaseDiv);
+            document.getElementById(`idea-input-${currentPhase + 1}`).focus();
+        }
+
+        function startTimer(duration) {
+            let timeLeft = duration;
+            const totalTime = duration;
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                timerDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+                const dashOffset = 283 * (1 - (timeLeft / totalTime));
+                timerProgress.style.strokeDashoffset = dashOffset;
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    timerDisplay.textContent = "0:00";
+                    nextPhaseBtn.disabled = false;
+                    // Removido el alert para una mejor UX
+                }
+            }, 1000);
+            const initialMinutes = Math.floor(duration / 60);
+            const initialSeconds = duration % 60;
+            timerDisplay.textContent = `${initialMinutes}:${initialSeconds < 10 ? '0' : ''}${initialSeconds}`;
+            timerProgress.style.strokeDashoffset = 0;
+        }
+
+        function nextPhase() {
+            clearInterval(timerInterval);
+            const currentInput = document.getElementById(`idea-input-${currentPhase + 1}`);
+            if (currentInput) userIdeas[currentPhase + 1] = currentInput.value;
+            currentPhase++;
+            if (currentPhase < phases.length) setupPhase();
+            else showResults();
+        }
+        
+        function showResults() {
+            showSection('interactive-tool-results');
+            const summaryContainer = document.getElementById('results-summary');
+            summaryContainer.innerHTML = `
+                <div class="mb-4"><h3 class="font-bold text-lg">Pregunta Disparadora:</h3><p class="p-3 bg-gray-100 rounded-lg">${userIdeas.question}</p></div>
+                <div><h3 class="font-bold text-lg">${phases[3].title} (Plenaria)</h3><p class="p-3 bg-teal-50 border-l-4 border-teal-500 rounded-lg whitespace-pre-wrap">${userIdeas[4] || 'No se ingresaron ideas.'}</p></div>
+                <details><summary class="font-medium cursor-pointer">Ver todas las ideas</summary>
+                    <div class="mt-4 space-y-2">
+                        <div><h4 class="font-semibold">${phases[0].title}</h4><p class="p-2 bg-gray-50 rounded text-sm whitespace-pre-wrap">${userIdeas[1] || 'N/A'}</p></div>
+                        <div><h4 class="font-semibold">${phases[1].title}</h4><p class="p-2 bg-gray-50 rounded text-sm whitespace-pre-wrap">${userIdeas[2] || 'N/A'}</p></div>
+                        <div><h4 class="font-semibold">${phases[2].title}</h4><p class="p-2 bg-gray-50 rounded text-sm whitespace-pre-wrap">${userIdeas[3] || 'N/A'}</p></div>
+                    </div>
+                </details>`;
+        }
+
+        function exportResults(format) {
+            if (format === 'txt') {
+                let textContent = `Resultados de la sesión 1-2-4-All\n===================================\n\nPregunta: ${userIdeas.question}\n\n`;
+                phases.forEach((phase, index) => {
+                    textContent += `--- ${phase.title} ---\n${userIdeas[index + 1] || 'No se registraron ideas.'}\n\n`;
+                });
+                const blob = new Blob([textContent], { type: 'text/plain' });
+                const anchor = document.createElement('a');
+                anchor.download = 'resultados-1-2-4-all.txt';
+                anchor.href = window.URL.createObjectURL(blob);
+                anchor.click();
+                window.URL.revokeObjectURL(anchor.href);
+            }
+        }
+
+        // --- INICIALIZACIÓN ---
+        document.addEventListener('DOMContentLoaded', () => {
+            renderLS();
+        });
+    </script>
+</body>
+</html>
